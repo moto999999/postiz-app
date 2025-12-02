@@ -73,17 +73,28 @@ export class PublicIntegrationsController {
     });
 
     const buffer = Buffer.from(response.data);
+    const mimetype = lookup(body?.url?.split?.('?')?.[0]) || 'image/jpeg';
+    
+    // Extract filename from URL or generate one with proper extension
+    const urlPath = body.url.split('?')[0];
+    const urlFilename = urlPath.split('/').pop() || '';
+    const extension = urlFilename.includes('.') 
+      ? urlFilename.split('.').pop() 
+      : (mimetype.split('/')[1] || 'jpeg');
+    const originalname = urlFilename.includes('.') 
+      ? urlFilename 
+      : `upload.${extension}`;
 
     const getFile = await this.storage.uploadFile({
       buffer,
-      mimetype: lookup(body?.url?.split?.('?')?.[0]) || 'image/jpeg',
+      mimetype,
       size: buffer.length,
       path: '',
       fieldname: '',
       destination: '',
       stream: new Readable(),
-      filename: '',
-      originalname: '',
+      filename: originalname,
+      originalname,
       encoding: '',
     });
 
