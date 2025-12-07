@@ -210,7 +210,7 @@ export class RedditProvider extends SocialAbstract implements SocialProvider {
                 accessToken,
                 post.media[0].path
               ),
-              ...(post.media[0].path.indexOf('mp4') > -1
+              ...(post.media[0].path.indexOf('mp4') > -1 && post.media[0].thumbnail
                 ? {
                     video_poster_url: await this.uploadFileToReddit(
                       accessToken,

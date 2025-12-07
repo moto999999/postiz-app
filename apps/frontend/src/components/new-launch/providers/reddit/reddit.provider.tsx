@@ -224,14 +224,6 @@ export default withProvider({
       return 'When posting a media post, you must attached exactly one media file.';
     }
 
-    if (
-      posts.some((p) =>
-        p.some((a) => !a.thumbnail && a.path.indexOf('mp4') > -1)
-      )
-    ) {
-      return 'You must attach a thumbnail to your video post.';
-    }
-
     return true;
   },
   maximumCharacters: 10000,
